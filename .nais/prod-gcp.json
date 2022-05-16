@@ -1,0 +1,6 @@
+{
+  "app": {
+    "TOGGLE_SEND_MERVEILEDNING_VARSLER": "false",
+    "TOGGLE_SEND_AKTIVITETSKRAV_VARSLER": "false"
+  }
+}
