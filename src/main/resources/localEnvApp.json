@@ -1,0 +1,6 @@
+{
+  "appEnv": {
+    "applicationPort": "8080",
+    "applicationThreads": "1"
+  }
+}

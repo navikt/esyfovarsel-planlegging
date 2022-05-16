@@ -1,0 +1,5 @@
+{
+  "app": {
+    "KTOR_ENV": "remote"
+  }
+}
