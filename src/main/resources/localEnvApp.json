@@ -1,8 +1,7 @@
 {
   "appEnv": {
     "applicationPort": "8080",
-    "applicationThreads": "1",
-    "runningInGCPCluster": "false"
+    "applicationThreads": "1"
   },
   "authEnv": {
     "serviceuserUsername": "srvesyfovarsel",
@@ -19,7 +18,7 @@
   },
   "urlEnv": {
     "syfosmregisterUrl": "http://localhost:9494",
-    "syfosmregisterScope": "syfosmregisterScope",
+    "syfosmregisterScope": "syfosmregisterScope"
   },
   "kafkaEnv": {
     "bootstrapServersUrl": "http://localhost:9092",
