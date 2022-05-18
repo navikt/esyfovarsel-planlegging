@@ -10,7 +10,7 @@ import io.micrometer.prometheus.PrometheusMeterRegistry
 import io.prometheus.client.CollectorRegistry
 import io.prometheus.client.hotspot.DefaultExports
 
-const val METRICS_NS = "esyfovarsel"
+const val METRICS_NS = "esyfovarsel-planlegging"
 
 const val ERROR_IN_PLANNER = "${METRICS_NS}_error_in_planner"
 const val ERROR_IN_PARSING = "${METRICS_NS}_error_in_parser"

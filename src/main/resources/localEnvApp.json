@@ -4,7 +4,7 @@
     "applicationThreads": "1"
   },
   "authEnv": {
-    "serviceuserUsername": "srvesyfovarsel",
+    "serviceuserUsername": "srvesyfovarsel-planlegging",
     "serviceuserPassword": "password",
     "clientId": "clientId",
     "clientSecret": "clientSecret",
@@ -32,8 +32,8 @@
   "dbEnv": {
     "dbHost": "127.0.0.1",
     "dbPort": "5432",
-    "dbName": "esyfovarsel",
-    "dbUsername": "esyfovarsel-admin",
+    "dbName": "esyfovarsel-planlegging",
+    "dbUsername": "esyfovarsel-planlegging-admin",
     "dbPassword": "password"
   },
   "toggleEnv": {
