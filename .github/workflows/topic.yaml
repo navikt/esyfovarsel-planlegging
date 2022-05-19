@@ -6,7 +6,7 @@ on:
       - .github/workflows/topic.yaml
 jobs:
   deploy-topic-to-dev:
-    if: github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/heads/varsel-planlegging-')
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/varsel-planlegging-')
     name: Deploy topic to dev-gcp
     runs-on: ubuntu-latest
     steps:
@@ -21,7 +21,7 @@ jobs:
           VARS: .nais/topics/dev.json
 
   deploy-topic-to-prod:
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     name: Deploy topic to prod-gcp
     runs-on: ubuntu-latest
     steps:
