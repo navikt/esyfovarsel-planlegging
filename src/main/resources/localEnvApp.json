@@ -2,5 +2,13 @@
   "appEnv": {
     "applicationPort": "8080",
     "applicationThreads": "1"
+  },
+  "kafkaEnv": {
+    "aivenBroker": "http://localhost:9093",
+    "kafkaAuth": {
+      "truststoreLocation": "ts.loc",
+      "keystoreLocation": "ks.loc",
+      "credstorePassword": "password"
+    }
   }
 }

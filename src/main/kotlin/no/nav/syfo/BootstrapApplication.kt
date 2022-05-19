@@ -13,7 +13,11 @@ import io.ktor.routing.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.launch
 import no.nav.syfo.api.registerNaisApi
+import no.nav.syfo.kafka.planlagte_varsler.PlanlagteVarslerKafkaConsumer
+import no.nav.syfo.kafka.launchKafkaListener
+import no.nav.syfo.service.PlanlagtVarselService
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
@@ -24,6 +28,10 @@ val backgroundTasksContext = Executors.newFixedThreadPool(4).asCoroutineDispatch
 
 fun main() {
     val env = getEnv()
+
+    val planlagtVarselService = PlanlagtVarselService()
+    val planlagteVarslerKafkaConsumer = PlanlagteVarslerKafkaConsumer(env, planlagtVarselService)
+
     val server = embeddedServer(Netty, applicationEngineEnvironment {
         config = HoconApplicationConfig(ConfigFactory.load())
 
@@ -32,8 +40,8 @@ fun main() {
         }
 
         module {
-
             serverModule()
+            kafkaModule(planlagteVarslerKafkaConsumer)
 
             state.running = true
         }
@@ -45,8 +53,6 @@ fun main() {
 
     server.start(wait = false)
 }
-
-
 fun Application.serverModule() {
     install(ContentNegotiation) {
         jackson {
@@ -64,13 +70,14 @@ fun Application.serverModule() {
     state.initialized = true
 }
 
-val Application.envKind
-    get() = environment.config.property("ktor.environment").getString()
+fun Application.kafkaModule(
+    planlagteVarslerKafkaConsumer: PlanlagteVarslerKafkaConsumer
+) {
 
-fun Application.runningRemotely(block: () -> Unit) {
-    if (envKind == "remote") block()
-}
-
-fun Application.runningLocally(block: () -> Unit) {
-    if (envKind == "local") block()
+    launch(backgroundTasksContext) {
+        launchKafkaListener(
+            state,
+            planlagteVarslerKafkaConsumer
+        )
+    }
 }
