@@ -1,0 +1,36 @@
+name: "Deploy topics"
+on:
+  push:
+    paths:
+      - .nais/topics/**
+      - .github/workflows/topic.yaml
+jobs:
+  deploy-topics-to-dev:
+    if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/varsel-planlegging-')
+    name: Deploy topics to dev-gcp
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy topic varsel-planlegging to dev-gcp
+        uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: .nais/topics/varsel-planlegging-topic.yaml
+          VARS: .nais/topics/dev.json
+
+  deploy-topics-to-prod:
+    if: github.ref == 'refs/heads/main'
+    name: Deploy topics to prod-gcp
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy topic varsel-planlegging to prod-gcp
+        uses: nais/deploy/actions/deploy@master
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/topics/varsel-planlegging-topic.yaml
+          VARS: .nais/topics/prod.json
