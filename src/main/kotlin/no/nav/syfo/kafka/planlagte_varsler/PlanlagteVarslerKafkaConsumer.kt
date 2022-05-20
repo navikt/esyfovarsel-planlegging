@@ -45,8 +45,6 @@ class PlanlagteVarslerKafkaConsumer(
                 log.info("Received record from topic: [$topicVarselPlanlegging]")
                 try {
                     val varsel: PlanlagtVarsel = objectMapper.readValue(it.value())
-                    // TODO: FJERN FØR PRODSETTING!
-                    log.info("CONTENT: $varsel")
                     planlagtVarselService.createOrUpdate(varsel)
                 } catch (e: IOException) {
                     log.error(

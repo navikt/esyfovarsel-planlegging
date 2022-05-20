@@ -19,11 +19,5 @@ spec:
       application: esyfovarsel-planlegging
       access: read
     - team: team-esyfo
-      application: syfooppfolgingsplanservice
-      access: write
-    - team: team-esyfo
       application: syfomotebehov
-      access: write
-    - team: team-esyfo
-      application: isdialogmote
       access: write

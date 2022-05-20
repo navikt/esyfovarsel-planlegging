@@ -1,13 +1,13 @@
-name: "Deploy topic"
+name: "Deploy topics"
 on:
   push:
     paths:
       - .nais/topics/**
       - .github/workflows/topic.yaml
 jobs:
-  deploy-topic-to-dev:
+  deploy-topics-to-dev:
     if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/varsel-planlegging-')
-    name: Deploy topic to dev-gcp
+    name: Deploy topics to dev-gcp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,9 +20,9 @@ jobs:
           RESOURCE: .nais/topics/varsel-planlegging-topic.yaml
           VARS: .nais/topics/dev.json
 
-  deploy-topic-to-prod:
+  deploy-topics-to-prod:
     if: github.ref == 'refs/heads/main'
-    name: Deploy topic to prod-gcp
+    name: Deploy topics to prod-gcp
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
