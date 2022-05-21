@@ -54,6 +54,8 @@ fun main() {
     })
 
     server.start(wait = false)
+    
+    state.initialized = true
 }
 fun Application.serverModule() {
     install(ContentNegotiation) {
@@ -68,8 +70,6 @@ fun Application.serverModule() {
     routing {
         registerNaisApi(state)
     }
-
-    state.initialized = true
 }
 
 fun Application.kafkaModule(
