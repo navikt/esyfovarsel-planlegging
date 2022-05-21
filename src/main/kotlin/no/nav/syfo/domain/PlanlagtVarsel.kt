@@ -1,4 +1,4 @@
-package no.nav.syfo.kafka.planlagte_varsler.domain
+package no.nav.syfo.domain
 
 import java.io.Serializable
 import java.time.LocalDate
@@ -11,7 +11,7 @@ data class PlanlagtVarsel (
 data class Melding(
     val mottakerFnr: String,
     val type: VarselType,
-    val data: Any?
+    val data: String?
 ) : Serializable
 
 enum class VarselType : Serializable {
