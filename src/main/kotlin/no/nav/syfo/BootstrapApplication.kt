@@ -16,6 +16,7 @@ import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import no.nav.syfo.api.registerNaisApi
 import no.nav.syfo.db.Database
+import no.nav.syfo.db.grantAccessToIAMUsers
 import no.nav.syfo.kafka.planlagte_varsler.PlanlagteVarslerKafkaConsumer
 import no.nav.syfo.kafka.launchKafkaListener
 import no.nav.syfo.service.PlanlagtVarselService
@@ -49,12 +50,14 @@ fun main() {
         }
     })
 
+    database.grantAccessToIAMUsers()
+
     Runtime.getRuntime().addShutdownHook(Thread {
         server.stop(10, 10, TimeUnit.SECONDS)
     })
 
     server.start(wait = false)
-    
+
     state.initialized = true
 }
 fun Application.serverModule() {
