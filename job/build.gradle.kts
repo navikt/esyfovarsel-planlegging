@@ -95,10 +95,24 @@ tasks {
         println(project.version)
     }
 
-    withType<ShadowJar> {
-        manifest.attributes["Main-Class"] = "no.nav.syfo.JobKt"
-    }
+    named<Jar>("jar") {
+        archiveFileName.set("app.jar")
 
+        manifest {
+            attributes["Main-Class"] = "no.nav.syfo.JobKt"
+            attributes["Class-Path"] = configurations.runtimeClasspath.get().joinToString(separator = " ") {
+                it.name
+            }
+        }
+
+        doLast {
+            configurations.runtimeClasspath.get().forEach {
+                val file = File("$buildDir/libs/${it.name}")
+                if (!file.exists())
+                    it.copyTo(file)
+            }
+        }
+    }
     withType<KotlinCompile> {
         kotlinOptions.jvmTarget = "14"
     }
@@ -110,4 +124,11 @@ tasks {
         testLogging.showStandardStreams = true
     }
 
+}
+
+
+configure<SourceSetContainer> {
+    named("main") {
+        java.srcDir("src/main/kotlin")
+    }
 }
