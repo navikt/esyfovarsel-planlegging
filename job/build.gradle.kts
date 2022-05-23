@@ -22,9 +22,7 @@ plugins {
 repositories {
     mavenCentral()
     maven(url = "https://jitpack.io")
-    maven(url = "https://packages.confluent.io/maven/")
     maven(url = "https://repo.adeo.no/repository/maven-releases/")
-    maven(url = "https://github.com/navikt/vault-jdbc")
 }
 
 dependencies {
