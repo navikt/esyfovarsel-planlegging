@@ -1,5 +1,11 @@
 {
   "app": {
     "KTOR_ENV": "remote"
+  },
+  "job": {
+    "KTOR_ENV": "remote",
+    "JOB": "true",
+    "SEND_VARSLER": "false",
+    "ESYFOVARSEL_JOB_TRIGGER_URL": "https://esyfovarsel.intern.nav.no/job/trigger"
   }
 }

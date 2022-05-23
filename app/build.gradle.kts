@@ -1,4 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "no.nav.syfo"
@@ -90,11 +89,13 @@ configurations.implementation {
 }
 
 tasks {
+
     create("printVersion") {
         println(project.version)
     }
 
-    withType<ShadowJar> {
+    withType<Jar> {
+        archiveFileName.set("app.jar")
         manifest.attributes["Main-Class"] = "no.nav.syfo.BootstrapApplicationKt"
     }
 

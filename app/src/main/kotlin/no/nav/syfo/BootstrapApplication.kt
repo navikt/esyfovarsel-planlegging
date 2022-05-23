@@ -15,6 +15,7 @@ import io.ktor.server.netty.*
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import no.nav.syfo.api.registerNaisApi
+import no.nav.syfo.api.system.registerJobTriggerApi
 import no.nav.syfo.db.Database
 import no.nav.syfo.db.grantAccessToIAMUsers
 import no.nav.syfo.kafka.planlagte_varsler.PlanlagteVarslerKafkaConsumer
@@ -72,6 +73,7 @@ fun Application.serverModule() {
 
     routing {
         registerNaisApi(state)
+        registerJobTriggerApi()
     }
 }
 
