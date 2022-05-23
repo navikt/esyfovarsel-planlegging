@@ -1,3 +1,4 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 group = "no.nav.syfo"
@@ -94,8 +95,7 @@ tasks {
         println(project.version)
     }
 
-    withType<Jar> {
-        archiveFileName.set("job.jar")
+    withType<ShadowJar> {
         manifest.attributes["Main-Class"] = "no.nav.syfo.JobKt"
     }
 
