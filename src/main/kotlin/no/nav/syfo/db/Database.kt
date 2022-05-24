@@ -2,6 +2,7 @@ package no.nav.syfo.db
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
+import com.zaxxer.hikari.util.IsolationLevel
 import no.nav.syfo.DbEnv
 import org.flywaydb.core.Flyway
 import java.sql.Connection
@@ -21,7 +22,7 @@ class Database(val env: DbEnv) : DatabaseInterface {
         maximumPoolSize = 2
         minimumIdle = 1
         isAutoCommit = false
-        transactionIsolation = "TRANSACTION_REPEATABLE_READ"
+        transactionIsolation = IsolationLevel.TRANSACTION_READ_COMMITTED.name
         validate()
     })
 
