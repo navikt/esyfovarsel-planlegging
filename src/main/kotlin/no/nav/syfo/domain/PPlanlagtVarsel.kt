@@ -10,7 +10,6 @@ data class PPlanlagtVarsel (
     val mottakerFnr: String,
     val type: String,
     val data: String?,
-    val json: String,
     val opprettet: LocalDateTime,
     val sistEndret: LocalDateTime
 ) : Serializable

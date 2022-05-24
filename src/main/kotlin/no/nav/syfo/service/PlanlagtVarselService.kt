@@ -38,7 +38,7 @@ class PlanlagtVarselService(
             log.info("$className: Updating new varsel date for varsel with UUID ${previousVarsel.uuid}")
             database.updateVarseldato(previousVarsel.uuid, planlagtVarsel.varselDato)
         } ?: run {
-            val storedUUID = database.storePlanlagtVarsel(planlagtVarsel, varselJSON)
+            val storedUUID = database.storePlanlagtVarsel(planlagtVarsel)
             log.info("$className: Stored 'PLANLAGT VARSEL' with UUID $storedUUID to DB")
         }
     }

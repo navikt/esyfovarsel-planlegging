@@ -4,7 +4,6 @@ CREATE TABLE PLANLAGTE_VARSLER (
   mottaker_fnr             VARCHAR(11)        NOT NULL,
   type                     VARCHAR(100)       NOT NULL,
   data                     CLOB,
-  json                     CLOB               NOT NULL,
   opprettet                TIMESTAMP          NOT NULL,
   sist_endret              TIMESTAMP          NOT NULL
 );

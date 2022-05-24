@@ -8,15 +8,14 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
 
-fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel, planlagtVarselJSON: String): UUID {
+fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID {
 
     val insertStatement1 = """INSERT INTO PLANLAGTE_VARSLER (
         uuid,
         varsel_dato
         mottaker_fnr,
         type,
-        data,
-        json,                           
+        data,                        
         opprettet,
         sist_endret) VALUES (?, ?, ?, ?, ?, ?, ?)""".trimIndent()
 
@@ -29,7 +28,6 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel, planla
             it.setDate(2, Date.valueOf(planlagtVarsel.varselDato))
             it.setString(3, planlagtVarsel.melding.mottakerFnr)
             it.setString(4, planlagtVarsel.melding.data)
-            it.setString(5, planlagtVarselJSON)
             it.setTimestamp(6, now)
             it.setTimestamp(7, now)
             it.executeUpdate()

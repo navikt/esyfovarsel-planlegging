@@ -1,9 +1,6 @@
 package no.nav.syfo.db
 
-import no.nav.syfo.domain.Melding
 import no.nav.syfo.domain.PPlanlagtVarsel
-import no.nav.syfo.domain.PlanlagtVarsel
-import no.nav.syfo.domain.VarselType
 import java.sql.ResultSet
 
 fun DatabaseInterface.grantAccessToIAMUsers() {
@@ -31,7 +28,6 @@ fun ResultSet.toPPlanlagtVarsel() = PPlanlagtVarsel(
     mottakerFnr = getString("mottaker_fnr"),
     type = getString("type"),
     data = getString("data"),
-    json = getString("json"),
     opprettet = getTimestamp("opprettet").toLocalDateTime(),
     sistEndret = getTimestamp("sist_endret").toLocalDateTime(),
 )
