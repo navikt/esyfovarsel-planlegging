@@ -1,6 +1,7 @@
 package no.nav.syfo.db
 
 import no.nav.syfo.domain.Melding
+import no.nav.syfo.domain.PPlanlagtVarsel
 import no.nav.syfo.domain.PlanlagtVarsel
 import no.nav.syfo.domain.VarselType
 import java.sql.ResultSet
@@ -24,11 +25,13 @@ fun <T> ResultSet.toList(mapper: ResultSet.() -> T) = mutableListOf<T>().apply {
     }
 }
 
-fun ResultSet.toPlanlagtVarsel() = PlanlagtVarsel(
+fun ResultSet.toPPlanlagtVarsel() = PPlanlagtVarsel(
+    uuid = getString("uuid"),
     varselDato = getDate("varsel_dato").toLocalDate(),
-    melding = Melding(
-        mottakerFnr = getString("mottaker_fnr"),
-        type = VarselType.valueOf(getString("type")),
-        data = getString("data")
-    )
+    mottakerFnr = getString("mottaker_fnr"),
+    type = getString("type"),
+    data = getString("data"),
+    json = getString("json"),
+    opprettet = getTimestamp("opprettet").toLocalDateTime(),
+    sistEndret = getTimestamp("sist_endret").toLocalDateTime(),
 )

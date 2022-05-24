@@ -6,7 +6,9 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import no.nav.syfo.db.DatabaseInterface
+import no.nav.syfo.db.fetchPlanlagtVarselByFnrAndType
 import no.nav.syfo.db.storePlanlagtVarsel
+import no.nav.syfo.db.updateVarseldato
 import no.nav.syfo.domain.PlanlagtVarsel
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -25,7 +27,19 @@ class PlanlagtVarselService(
     }
     fun createOrUpdate(varselJSON: String) {
         val planlagtVarsel: PlanlagtVarsel = objectMapper.readValue(varselJSON)
-        val storedUUID = database.storePlanlagtVarsel(planlagtVarsel, varselJSON)
-        log.info("$className: Stored 'PLANLAGT VARSEL' with UUID $storedUUID to DB")
+        val melding = planlagtVarsel.melding
+
+        val previousVarsel = database.fetchPlanlagtVarselByFnrAndType(melding.mottakerFnr, "${melding.type}")
+        previousVarsel?.let {
+            if (planlagtVarsel.varselDato.isEqual(previousVarsel.varselDato)) {
+                log.warn("$className: Found duplicate varsel with UUID ${previousVarsel.uuid}")
+                return
+            }
+            log.info("$className: Updating new varsel date for varsel with UUID ${previousVarsel.uuid}")
+            database.updateVarseldato(previousVarsel.uuid, planlagtVarsel.varselDato)
+        } ?: run {
+            val storedUUID = database.storePlanlagtVarsel(planlagtVarsel, varselJSON)
+            log.info("$className: Stored 'PLANLAGT VARSEL' with UUID $storedUUID to DB")
+        }
     }
 }
