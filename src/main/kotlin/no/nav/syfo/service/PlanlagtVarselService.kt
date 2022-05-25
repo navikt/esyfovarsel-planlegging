@@ -9,6 +9,7 @@ import no.nav.syfo.db.*
 import no.nav.syfo.domain.PlanlagtVarsel
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.LocalDate
 
 class PlanlagtVarselService(
     val database: DatabaseInterface
@@ -27,6 +28,10 @@ class PlanlagtVarselService(
 
         val previousVarsel = database.findDuplicateEntry("${planlagtVarsel.type}", planlagtVarsel.arbeidstakerFnr, planlagtVarsel.orgnummer)
         previousVarsel?.let {
+            if (planlagtVarsel.varselDato.isBefore(LocalDate.now())) {
+                log.warn("$className: Varsel date ${planlagtVarsel.varselDato} is before today, skipping varselplanning")
+                return
+            }
             if (planlagtVarsel.varselDato.isEqual(previousVarsel.varselDato)) {
                 log.warn("$className: Found duplicate varsel with UUID ${previousVarsel.uuid}")
                 return
