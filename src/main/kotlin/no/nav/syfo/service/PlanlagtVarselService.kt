@@ -27,9 +27,8 @@ class PlanlagtVarselService(
     }
     fun createOrUpdate(varselJSON: String) {
         val planlagtVarsel: PlanlagtVarsel = objectMapper.readValue(varselJSON)
-        val melding = planlagtVarsel.melding
 
-        val previousVarsel = database.fetchPlanlagtVarselByFnrAndType(melding.mottakerFnr, "${melding.type}")
+        val previousVarsel = database.fetchPlanlagtVarselByFnrAndType(planlagtVarsel.arbeidstakerFnr, "${planlagtVarsel.type}")
         previousVarsel?.let {
             if (planlagtVarsel.varselDato.isEqual(previousVarsel.varselDato)) {
                 log.warn("$className: Found duplicate varsel with UUID ${previousVarsel.uuid}")

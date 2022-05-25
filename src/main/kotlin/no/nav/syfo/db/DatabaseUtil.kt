@@ -24,7 +24,7 @@ fun <T> ResultSet.toList(mapper: ResultSet.() -> T) = mutableListOf<T>().apply {
 
 fun ResultSet.toPPlanlagtVarsel() = PPlanlagtVarsel(
     uuid = getString("uuid"),
-    varselDato = getDate("varsel_dato").toLocalDate(),
+    varselDato = getDate("varseldato").toLocalDate(),
     mottakerFnr = getString("mottaker_fnr"),
     type = getString("type"),
     data = getString("data"),

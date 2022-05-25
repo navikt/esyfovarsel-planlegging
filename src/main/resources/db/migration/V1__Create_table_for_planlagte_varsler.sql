@@ -1,9 +1,9 @@
 CREATE TABLE PLANLAGTE_VARSLER (
   uuid                     UUID               PRIMARY KEY,
-  varsel_dato              DATE               NOT NULL,
-  mottaker_fnr             VARCHAR(11)        NOT NULL,
+  varseldato              DATE               NOT NULL,
   type                     VARCHAR(100)       NOT NULL,
-  data                     CLOB,
+  arbeidstakerFnr          VARCHAR(11)        NOT NULL,
+  orgnummer                VARCHAR(9)         NOT NULL,
   opprettet                TIMESTAMP          NOT NULL,
   sist_endret              TIMESTAMP          NOT NULL
 );

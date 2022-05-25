@@ -12,10 +12,10 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
 
     val insertStatement1 = """INSERT INTO PLANLAGTE_VARSLER (
         uuid,
-        varsel_dato
-        mottaker_fnr,
+        varseldato
         type,
-        data,                        
+        arbeidstaker_fnr,
+        orgnummer                        
         opprettet,
         sist_endret) VALUES (?, ?, ?, ?, ?, ?, ?)""".trimIndent()
 
@@ -26,10 +26,10 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
         connection.prepareStatement(insertStatement1).use {
             it.setObject(1, varselUUID)
             it.setDate(2, Date.valueOf(planlagtVarsel.varselDato))
-            it.setString(3, planlagtVarsel.melding.mottakerFnr)
-            it.setString(4, planlagtVarsel.melding.data)
+            it.setString(3, planlagtVarsel.arbeidstakerFnr)
+            it.setString(4, planlagtVarsel.orgnummer)
+            it.setTimestamp(5, now)
             it.setTimestamp(6, now)
-            it.setTimestamp(7, now)
             it.executeUpdate()
         }
         connection.commit()
@@ -40,7 +40,7 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
 fun DatabaseInterface.fetchPlanlagtVarselByFnrAndType(fnr: String, type: String): PPlanlagtVarsel? {
     val queryStatement = """SELECT *
                             FROM PLANLAGTE_VARSLER
-                            WHERE mottaker_fnr = ? and type = ?
+                            WHERE arbeidstaker_fnr = ? and type = ?
     """.trimIndent()
 
     val varsler = connection.use { connection ->
@@ -58,7 +58,7 @@ fun DatabaseInterface.fetchPlanlagtVarselByFnrAndType(fnr: String, type: String)
 
 fun DatabaseInterface.updateVarseldato(uuid: String, varseldato: LocalDate) {
     val updateStatement = """UPDATE PLANLAGTE_VARSLER
-                            SET varsel_dato = ?
+                            SET varseldato = ?
                                 sist_endret = ?
                             WHERE uuid = ?
     """.trimIndent()
