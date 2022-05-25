@@ -14,7 +14,7 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
         uuid,
         varseldato
         type,
-        arbeidstaker_fnr,
+        arbeidstakerFnr,
         orgnummer                        
         opprettet,
         sist_endret) VALUES (?, ?, ?, ?, ?, ?, ?)""".trimIndent()
