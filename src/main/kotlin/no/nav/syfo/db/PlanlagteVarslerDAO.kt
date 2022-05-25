@@ -40,7 +40,7 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
 fun DatabaseInterface.findDuplicateEntry(type: String, fnr: String, orgnr: String): PPlanlagtVarsel? {
     val queryStatement = """SELECT *
                             FROM PLANLAGTE_VARSLER
-                            WHERE type = ? and arbeidstaker_fnr = ? and orgnummer = ?
+                            WHERE type = ? and arbeidstakerFnr = ? and orgnummer = ?
     """.trimIndent()
 
     val varsler = connection.use { connection ->
