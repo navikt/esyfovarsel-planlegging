@@ -37,16 +37,17 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
     return varselUUID
 }
 
-fun DatabaseInterface.fetchPlanlagtVarselByFnrAndType(fnr: String, type: String): PPlanlagtVarsel? {
+fun DatabaseInterface.findDuplicateEntry(type: String, fnr: String, orgnr: String): PPlanlagtVarsel? {
     val queryStatement = """SELECT *
                             FROM PLANLAGTE_VARSLER
-                            WHERE arbeidstaker_fnr = ? and type = ?
+                            WHERE type = ? and arbeidstaker_fnr = ? and orgnummer = ?
     """.trimIndent()
 
     val varsler = connection.use { connection ->
         connection.prepareStatement(queryStatement).use {
-            it.setString(1, fnr)
-            it.setString(2, type)
+            it.setString(1, type)
+            it.setString(2, fnr)
+            it.setString(3, orgnr)
             it.executeQuery().toList { toPPlanlagtVarsel() }
         }
     }

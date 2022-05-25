@@ -10,5 +10,6 @@ data class PlanlagtVarsel (
     val orgnummer: String,
 ) : Serializable
 enum class VarselType : Serializable {
-    NL_SVAR_MOTEBEHOV
+    SM_DIALOGMOTE_SVAR_MOTEBEHOV,
+    NL_DIALOGMOTE_SVAR_MOTEBEHOV
 }

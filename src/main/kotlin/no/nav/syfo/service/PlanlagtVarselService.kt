@@ -5,10 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
-import no.nav.syfo.db.DatabaseInterface
-import no.nav.syfo.db.fetchPlanlagtVarselByFnrAndType
-import no.nav.syfo.db.storePlanlagtVarsel
-import no.nav.syfo.db.updateVarseldato
+import no.nav.syfo.db.*
 import no.nav.syfo.domain.PlanlagtVarsel
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -28,7 +25,7 @@ class PlanlagtVarselService(
     fun createOrUpdate(varselJSON: String) {
         val planlagtVarsel: PlanlagtVarsel = objectMapper.readValue(varselJSON)
 
-        val previousVarsel = database.fetchPlanlagtVarselByFnrAndType(planlagtVarsel.arbeidstakerFnr, "${planlagtVarsel.type}")
+        val previousVarsel = database.findDuplicateEntry("${planlagtVarsel.type}", planlagtVarsel.arbeidstakerFnr, planlagtVarsel.orgnummer)
         previousVarsel?.let {
             if (planlagtVarsel.varselDato.isEqual(previousVarsel.varselDato)) {
                 log.warn("$className: Found duplicate varsel with UUID ${previousVarsel.uuid}")

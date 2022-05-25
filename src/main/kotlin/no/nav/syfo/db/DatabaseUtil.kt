@@ -25,9 +25,9 @@ fun <T> ResultSet.toList(mapper: ResultSet.() -> T) = mutableListOf<T>().apply {
 fun ResultSet.toPPlanlagtVarsel() = PPlanlagtVarsel(
     uuid = getString("uuid"),
     varselDato = getDate("varseldato").toLocalDate(),
-    mottakerFnr = getString("mottaker_fnr"),
     type = getString("type"),
-    data = getString("data"),
+    arbeidstakerFnr = getString("arbeidstaker_fnr"),
+    orgnummer = getString("orgnummer"),
     opprettet = getTimestamp("opprettet").toLocalDateTime(),
     sistEndret = getTimestamp("sist_endret").toLocalDateTime(),
 )
