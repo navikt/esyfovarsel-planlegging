@@ -15,6 +15,8 @@ import io.ktor.server.netty.*
 import kotlinx.coroutines.asCoroutineDispatcher
 import kotlinx.coroutines.launch
 import no.nav.syfo.api.registerNaisApi
+import no.nav.syfo.db.Database
+import no.nav.syfo.db.grantAccessToIAMUsers
 import no.nav.syfo.kafka.planlagte_varsler.PlanlagteVarslerKafkaConsumer
 import no.nav.syfo.kafka.launchKafkaListener
 import no.nav.syfo.service.PlanlagtVarselService
@@ -29,7 +31,8 @@ val backgroundTasksContext = Executors.newFixedThreadPool(4).asCoroutineDispatch
 fun main() {
     val env = getEnv()
 
-    val planlagtVarselService = PlanlagtVarselService()
+    val database = Database(env.dbEnv)
+    val planlagtVarselService = PlanlagtVarselService(database)
     val planlagteVarslerKafkaConsumer = PlanlagteVarslerKafkaConsumer(env, planlagtVarselService)
 
     val server = embeddedServer(Netty, applicationEngineEnvironment {
@@ -47,11 +50,15 @@ fun main() {
         }
     })
 
+    database.grantAccessToIAMUsers()
+
     Runtime.getRuntime().addShutdownHook(Thread {
         server.stop(10, 10, TimeUnit.SECONDS)
     })
 
     server.start(wait = false)
+
+    state.initialized = true
 }
 fun Application.serverModule() {
     install(ContentNegotiation) {
@@ -66,8 +73,6 @@ fun Application.serverModule() {
     routing {
         registerNaisApi(state)
     }
-
-    state.initialized = true
 }
 
 fun Application.kafkaModule(
