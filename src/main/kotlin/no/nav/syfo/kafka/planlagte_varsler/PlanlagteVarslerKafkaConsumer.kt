@@ -17,7 +17,7 @@ class PlanlagteVarslerKafkaConsumer(
     env: Environment,
     val planlagtVarselService: PlanlagtVarselService
 ): KafkaListener {
-    private val className = PlanlagteVarslerKafkaConsumer::class.java
+    private val className = PlanlagteVarslerKafkaConsumer::class.simpleName
     private val log: Logger = LoggerFactory.getLogger(className)
     private val kafkaListener: KafkaConsumer<String, String>
     init {

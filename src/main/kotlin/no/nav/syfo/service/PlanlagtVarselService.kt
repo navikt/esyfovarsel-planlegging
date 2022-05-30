@@ -14,7 +14,7 @@ import java.time.LocalDate
 class PlanlagtVarselService(
     val database: DatabaseInterface
 ) {
-    private val className = PlanlagtVarselService::class.java
+    private val className = PlanlagtVarselService::class.simpleName
     private val log: Logger = LoggerFactory.getLogger(className)
 
     private val objectMapper: ObjectMapper = ObjectMapper().apply {
@@ -26,8 +26,7 @@ class PlanlagtVarselService(
     fun createOrUpdate(varselJSON: String) {
         val planlagtVarsel: PlanlagtVarsel = objectMapper.readValue(varselJSON)
 
-        //TODO remove
-        log.info("Mottatt varsel: ${planlagtVarsel}")
+        log.info("$className: Mottatt ${planlagtVarsel.type} med varseldato ${planlagtVarsel.varselDato} for orgnummer ${planlagtVarsel.orgnummer}")
 
         val previousVarsel = database.findDuplicateEntry("${planlagtVarsel.type}", planlagtVarsel.arbeidstakerFnr, planlagtVarsel.orgnummer)
         previousVarsel?.let {
