@@ -60,7 +60,7 @@ fun DatabaseInterface.findDuplicateEntry(type: String, fnr: String, orgnr: Strin
 
 fun DatabaseInterface.updateVarseldato(uuid: String, varseldato: LocalDate) {
     val updateStatement = """UPDATE PLANLAGTE_VARSLER
-                            SET varseldato = ?
+                            SET varseldato = ?,
                                 sist_endret = ?
                             WHERE uuid = ?
     """.trimIndent()
