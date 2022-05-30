@@ -26,10 +26,11 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
         connection.prepareStatement(insertStatement1).use {
             it.setObject(1, varselUUID)
             it.setDate(2, Date.valueOf(planlagtVarsel.varselDato))
-            it.setString(3, planlagtVarsel.arbeidstakerFnr)
-            it.setString(4, planlagtVarsel.orgnummer)
-            it.setTimestamp(5, now)
+            it.setString(3, planlagtVarsel.type.name)
+            it.setString(4, planlagtVarsel.arbeidstakerFnr)
+            it.setString(5, planlagtVarsel.orgnummer)
             it.setTimestamp(6, now)
+            it.setTimestamp(7, now)
             it.executeUpdate()
         }
         connection.commit()
