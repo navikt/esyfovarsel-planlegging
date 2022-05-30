@@ -26,6 +26,9 @@ class PlanlagtVarselService(
     fun createOrUpdate(varselJSON: String) {
         val planlagtVarsel: PlanlagtVarsel = objectMapper.readValue(varselJSON)
 
+        //TODO remove
+        log.info("Mottatt varsel: ${planlagtVarsel}")
+
         val previousVarsel = database.findDuplicateEntry("${planlagtVarsel.type}", planlagtVarsel.arbeidstakerFnr, planlagtVarsel.orgnummer)
         previousVarsel?.let {
             if (planlagtVarsel.varselDato.isBefore(LocalDate.now())) {
