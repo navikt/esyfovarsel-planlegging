@@ -12,10 +12,10 @@ fun DatabaseInterface.storePlanlagtVarsel(planlagtVarsel: PlanlagtVarsel): UUID 
 
     val insertStatement1 = """INSERT INTO PLANLAGTE_VARSLER (
         uuid,
-        varseldato
+        varseldato,
         type,
         arbeidstakerFnr,
-        orgnummer                        
+        orgnummer,                  
         opprettet,
         sist_endret) VALUES (?, ?, ?, ?, ?, ?, ?)""".trimIndent()
 
