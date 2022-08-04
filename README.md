@@ -1,3 +1,5 @@
+Appen er ikke tatt i bruk
+
 # esyfovarsel-planlegging
 Varselplanlegging for eSYFO varsler
 
